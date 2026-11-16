@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitOps on Amazon EKS · Live Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="aurora a"></div><div class="aurora b"></div>
+    <main class="shell">
+      <div class="eyebrow"><span class="pulse"></span> CLOUD ENGINEERING LAB / LIVE APPLICATION</div>
+      <h1>LIVE CI/CD PIPELINE DEMO<br /><span>Version 2 - Powered by Amazon EKS.</span></h1>
+      <p class="intro">GitHub Actions builds the container. Amazon ECR stores the image.
+        Argo CD reconciles the Kubernetes state directly from Git.</p>
+      <div class="pipeline">
+        <div>GitHub</div><b>→</b><div>Actions</div><b>→</b><div>Amazon ECR</div><b>→</b><div>Argo CD</div><b>→</b><div>Amazon EKS</div>
+      </div>
+      <div class="stats">
+        <div class="tile"><small>Application revision</small><strong>{{ version }}</strong></div>
+        <div class="tile"><small>Running container / pod</small><strong>{{ pod }}</strong></div>
+        <div class="tile"><small>Readiness check</small><strong class="ok">● Healthy</strong></div>
+      </div>
+      <div class="footer"><span>Hafiz Mohammad Sunasara · AWS &amp; DevOps Engineering</span><span>GitOps demonstration · Not a production service</span></div>
+    </main>
+  </body>
+</html>

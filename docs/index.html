@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0B0B0D" />
+  <meta name="description" content="Hafiz Mohammad Sunasara — evidence-backed GitOps engineering portfolio. GitHub Actions, Amazon ECR, Argo CD and Amazon EKS." />
+  <title>GitOps on AWS EKS | Hafiz Mohammad Sunasara</title>
+  <link rel="icon" type="image/svg+xml" href="site-assets/mark.svg" />
+  <link rel="stylesheet" href="site-assets/style.css" />
+  <script src="site-assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <div class="light-orb orb-one" aria-hidden="true"></div>
+  <div class="light-orb orb-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Back to home"><img src="site-assets/mark.svg" alt="" /><span>HMS<span class="brand-dot">.</span><small>CLOUD ENGINEERING</small></span></a>
+    <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">Menu <span>☰</span></button>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#architecture">Architecture</a>
+      <a href="#process">Pipeline</a>
+      <a href="#evidence">Proof</a>
+      <a href="#engineering">Engineering</a>
+      <a class="nav-action" href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops" target="_blank" rel="noopener noreferrer">Source repo ↗</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="home">
+      <div class="eyebrow"><span class="status-lamp"></span><span>ENGINEERING PORTFOLIO / 2026</span></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="hero-overline">THE BUILD. THE FAILURES. THE PROOF.</p>
+          <h1>From code to <span class="gold-text">cluster.</span></h1>
+          <p class="hero-lead">A real GitOps delivery journey through <strong>GitHub Actions</strong>, <strong>Amazon ECR</strong>, <strong>Argo CD</strong>, and <strong>Amazon EKS</strong>.</p>
+          <p class="hero-description">Built, debugged and validated by <strong>Hafiz Mohammad Sunasara</strong>. Every major result is tied to screenshots, commits, workflow runs or GitHub pull requests—not invented production metrics.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#evidence">Explore deployment proof <span>↗</span></a>
+            <a class="btn btn-outline" href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops-portfolio/blob/main/DEEP-DIVE.md" target="_blank" rel="noopener noreferrer">Read technical deep dive</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="GitOps architecture preview">
+          <img src="site-assets/hero.svg" alt="Black-gold technical portfolio artwork showing the EKS GitOps pipeline" />
+          <div class="art-caption"><span class="small-dot"></span> GIT IS THE SOURCE OF TRUTH <span>·</span> ARGO OWNS DEPLOYMENT</div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <article class="stat"><div class="stat-number">02<span> / 02</span></div><p>Ready worker nodes <small>Captured cluster check</small></p></article>
+        <article class="stat"><div class="stat-number">02<span> pods</span></div><p>Desired Flask replicas <small>Ready in verification</small></p></article>
+        <article class="stat"><div class="stat-number">SHA<span>-tagged</span></div><p>Immutable-identity image <small>Promoted by PR</small></p></article>
+        <article class="stat"><div class="stat-number success">Synced</div><p>Argo CD application <small>Health: Healthy</small></p></article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="architecture">
+      <div class="section-title"><div><p class="kicker">01 / SYSTEM DESIGN</p><h2>Separation of <em>concerns.</em></h2></div><p class="section-intro">A tested container and a deployed application are not the same thing. The promotion pull request makes the release intention explicit; Argo CD takes over reconciliation.</p></div>
+      <div class="architecture-frame"><img src="site-assets/architecture.svg" alt="GitHub main to Actions, ECR, promotion PR, Git Kustomize, Argo CD, EKS and local browser port-forward" loading="lazy" /></div>
+      <div class="notice"><span class="notice-icon">!</span><p><strong>Engineering honesty:</strong> The demonstrated Flask URL was <code>localhost:18081</code> via a local port-forward. No public application URL, tested cross-AZ failure or completed Git rollback is claimed.</p></div>
+    </section>
+
+    <section class="section wrap" id="process">
+      <div class="section-title"><div><p class="kicker">02 / THE FLOW</p><h2>One commit. <em>Reviewable release.</em></h2></div><p class="section-intro">The successful final change moved from source to a new healthy workload without having the CI runner deploy directly with kubectl.</p></div>
+      <div class="timeline">
+        <article class="step"><span class="step-index">01</span><div><h3>Source changes on GitHub</h3><p>Flask heading updated and committed. The application source remains in its own working repository.</p><a href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops/commit/1eda2123ef3b57054ac444f4842f60438e5d5571" target="_blank" rel="noopener noreferrer">View source commit ↗</a></div></article>
+        <article class="step"><span class="step-index">02</span><div><h3>Tests, YAML checks and image build</h3><p>GitHub Actions validates Python, manifests and Docker packaging. Eligible main pushes proceed to publishing.</p><a href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops/actions/runs/43748702205" target="_blank" rel="noopener noreferrer">View successful CI run ↗</a></div></article>
+        <article class="step"><span class="step-index">03</span><div><h3>Publish to Amazon ECR</h3><p>GitHub OIDC assumes AWS role credentials and pushes the image under the full source commit SHA.</p><span class="step-detail">BUILD ARTIFACT ≠ RELEASED VERSION</span></div></article>
+        <article class="step"><span class="step-index">04</span><div><h3>Promotion pull request</h3><p>The workflow proposes a Kustomize image update. A merged PR changes Git's declared desired version.</p><a href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops/pull/3" target="_blank" rel="noopener noreferrer">Inspect merged PR #3 ↗</a></div></article>
+        <article class="step"><span class="step-index">05</span><div><h3>Argo CD reconciles EKS</h3><p>Argo watches the overlay, detects the new desired image, and the Deployment rolls out updated Pods.</p><span class="step-detail">OBSERVED: SYNCED / HEALTHY</span></div></article>
+        <article class="step"><span class="step-index">06</span><div><h3>New UI and readiness verified</h3><p>Browser renders Version 2 on localhost after the rollout. Health and readiness probes returned HTTP 200.</p><a href="#evidence">See before/after proof ↓</a></div></article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="evidence">
+      <div class="section-title"><div><p class="kicker">03 / EVIDENCE GALLERY</p><h2>No mock success <em>screens.</em></h2></div><p class="section-intro">Original screenshots from the build and troubleshooting sessions. Select a category to inspect the strongest signals.</p></div>
+      <div class="filters" role="group" aria-label="Filter evidence screenshots">
+        <button type="button" class="filter active" data-filter="all" aria-pressed="true">All evidence</button>
+        <button type="button" class="filter" data-filter="infra" aria-pressed="false">Infrastructure</button>
+        <button type="button" class="filter" data-filter="ci" aria-pressed="false">CI + Promotion</button>
+        <button type="button" class="filter" data-filter="gitops" aria-pressed="false">Argo CD</button>
+        <button type="button" class="filter" data-filter="app" aria-pressed="false">Application</button>
+        <button type="button" class="filter" data-filter="debug" aria-pressed="false">Debugging</button>
+      </div>
+      <div class="gallery">
+        <a class="shot" data-category="infra" href="site-assets/gallery/02-two-worker-nodes-ready.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/02-two-worker-nodes-ready.png" alt="Two Ready EKS worker nodes screenshot" /><div class="shot-label"><span>Infrastructure · Verified</span><h3>Two EKS nodes Ready</h3><p>Cluster API, workers and system Pods responding.</p></div></a>
+        <a class="shot" data-category="ci" href="site-assets/gallery/07-ci-green-after-fix.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/07-ci-green-after-fix.png" alt="Successful GitHub Actions run" /><div class="shot-label"><span>CI · Verified</span><h3>Green GitHub Actions</h3><p>Validation and build pipeline passing.</p></div></a>
+        <a class="shot" data-category="ci" href="site-assets/gallery/09-promotion-pr-merged.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/09-promotion-pr-merged.png" alt="Merged GitOps promotion pull request" /><div class="shot-label"><span>Promotion · Verified</span><h3>Image promotion merged</h3><p>Git—not a direct kubectl command—records the release.</p></div></a>
+        <a class="shot" data-category="gitops" href="site-assets/gallery/13-argocd-dashboard-healthy.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/13-argocd-dashboard-healthy.png" alt="Argo CD dashboard showing Healthy Synced" /><div class="shot-label"><span>GitOps · Verified</span><h3>Argo CD Healthy / Synced</h3><p>Desired Git state reconciled into Kubernetes.</p></div></a>
+        <a class="shot" data-category="gitops" href="site-assets/gallery/14-argocd-resource-tree.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/14-argocd-resource-tree.png" alt="Argo CD resource tree with Service Deployment ReplicaSets and Pods" /><div class="shot-label"><span>GitOps · Verified</span><h3>Resource tree, not a status badge</h3><p>Deployment, Service, ReplicaSets and live Pods.</p></div></a>
+        <a class="shot" data-category="app" href="site-assets/gallery/15-flask-before-change.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/15-flask-before-change.png" alt="Application version before the final change" /><div class="shot-label"><span>App · Before</span><h3>Previous deployed heading</h3><p>Baseline observed through the local browser.</p></div></a>
+        <a class="shot" data-category="app" href="site-assets/gallery/16-flask-version-2-success.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/16-flask-version-2-success.png" alt="Updated Version 2 Flask application, healthy" /><div class="shot-label"><span>App · After</span><h3>Version 2 running on EKS</h3><p>The UI change appears with a new healthy workload.</p></div></a>
+        <a class="shot" data-category="debug" href="site-assets/gallery/11-windows-port-8080-error.png" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="site-assets/gallery/11-windows-port-8080-error.png" alt="Windows port 8080 bind failure" /><div class="shot-label"><span>Debugging · Real issue</span><h3>8080 bind error</h3><p>Local Windows port forwarding failed; 18080 worked.</p></div></a>
+      </div>
+      <p class="gallery-note">Eight highlighted screenshots here · <a href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops-portfolio/blob/main/evidence/INDEX.md" target="_blank" rel="noopener noreferrer">All 16 screenshots and evidence explanations ↗</a></p>
+    </section>
+
+    <section class="section wrap" id="engineering">
+      <div class="section-title"><div><p class="kicker">04 / ENGINEERING DECISIONS</p><h2>Tradeoffs <em>documented.</em></h2></div><p class="section-intro">A credible case study explains the limits of the demonstration as clearly as the successful path.</p></div>
+      <div class="decision-grid">
+        <article class="decision"><span class="decision-icon">01 /</span><h3>PR as release gate</h3><p>The build can publish an image, but the deployment declaration changes only after a reviewable Git update.</p><span class="decision-tag">AUDITABILITY</span></article>
+        <article class="decision"><span class="decision-icon">02 /</span><h3>OIDC for CI identity</h3><p>Short-lived role assumption avoids baking long-lived AWS access keys into the workflow. Credentials still require careful handling.</p><span class="decision-tag">IDENTITY</span></article>
+        <article class="decision"><span class="decision-icon">03 /</span><h3>Readiness before traffic</h3><p>Two Pods, startup/readiness/liveness probes and bounded resources reduce several common deployment failure modes.</p><span class="decision-tag">RELIABILITY</span></article>
+        <article class="decision"><span class="decision-icon">04 /</span><h3>Scope honesty</h3><p>The demo did not establish public HTTP ingress, deterministic cross-AZ spreading or a completed rollback rehearsal.</p><span class="decision-tag">ENGINEERING INTEGRITY</span></article>
+      </div>
+      <div class="quote">“A green pipeline tells me the build passed. The cluster, the controller, the health checks and the rendered page tell me what actually shipped.”<span>— Engineering takeaway</span></div>
+    </section>
+
+    <section class="closing wrap">
+      <p class="kicker">BEYOND A SCREENSHOT</p>
+      <h2>Built. Debugged. <span class="gold-text">Verified.</span></h2>
+      <p>Study the complete architecture, commands, failure narratives and explicit limitations in the technical deep dive—or inspect the source repository and merged pull requests directly.</p>
+      <div class="hero-actions center">
+        <a class="btn btn-primary" href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops-portfolio/blob/main/DEEP-DIVE.md" target="_blank" rel="noopener noreferrer">Open the deep dive ↗</a>
+        <a class="btn btn-outline" href="https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops" target="_blank" rel="noopener noreferrer">Inspect original application ↗</a>
+      </div>
+    </section>
+  </main>
+  <footer class="footer wrap"><span>© 2026 Hafiz Mohammad Sunasara · Cloud & DevOps Engineering</span><span>Educational lab · Provenance-backed portfolio · Not a production service</span></footer>
+</body>
+</html>

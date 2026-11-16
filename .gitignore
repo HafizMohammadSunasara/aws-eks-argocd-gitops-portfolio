@@ -1,0 +1,60 @@
+# Local tools and generated output
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+coverage/
+.coverage
+node_modules/
+dist/
+build/
+
+# Never commit credential stores or local cluster access
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*credentials*
+*kubeconfig*
+.kube/
+.aws/
+
+# Packaging and temporary review files
+*.zip
+*.log
+*.tmp
+*** Add File: Hafiz-EKS-GitOps-Gold-Portfolio/SECURITY.md
+# Security policy for this public engineering portfolio
+
+This is a public **case study**, not a password vault, cluster configuration backup, or production deployment endpoint.
+
+## Material intentionally excluded
+
+- AWS Access Key ID / Secret Access Key shown in an earlier local PowerShell screenshot.
+- Argo CD bootstrap admin password shown in an earlier PowerShell screenshot.
+- Kubeconfig, local AWS credentials, active session cookies, secrets and personal account exports.
+- Screenshots showing those credentials, even when they contain otherwise useful error messages.
+
+**Publication does not undo past exposure.** Credential owners should revoke/rotate the exposed AWS access key and Argo CD password, review relevant CloudTrail/Argo access logs, and verify no copy reached Git history or another public surface. Rotation was discussed, but this portfolio makes no unverified claim that a complete credential incident review was performed.
+
+## Safe evidence
+
+Curated images in \`evidence/screenshots/\` were selected for technical value and screened for credential strings. Some captures can still show AWS account identifiers, node hostnames or cluster names that already appear in the original public project; these are identifiers, **not** authorization secrets. Review your privacy requirements before publication.
+
+## Scope and residual risk
+
+- The original workflow uses GitHub OIDC role assumption and a scoped \`push\` path.
+- The application uses an internal Kubernetes ClusterIP Service.
+- EKS public API endpoint restrictions, least-privilege IAM, Kubernetes RBAC, image signing, NetworkPolicies, TLS, monitoring and failure-domain spread all deserve periodic review.
+- \`reference-source/k8s/optional/public-nlb-service.yaml\` is **optional** and not evidence of an active public NLB.
+- Do not run this portfolio repository's reference source as an unreviewed deployment script; operational ownership belongs to the original repo.
+
+If you find a security issue, contact the repository owner privately through a verified channel; do not paste credentials into GitHub Issues.

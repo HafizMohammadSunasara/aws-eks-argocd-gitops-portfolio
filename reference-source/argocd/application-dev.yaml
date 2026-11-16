@@ -1,0 +1,31 @@
+# Argo CD Application - Development Environment
+# Automated synchronization enabled after successful validation.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: gitops-flask-dev
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/HafizMohammadSunasara/aws-eks-argocd-gitops.git
+    targetRevision: main
+    path: k8s/overlays/dev
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-demo
+
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: false
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true

@@ -1,0 +1,125 @@
+name: Test, Build and Propose GitOps Deployment
+
+on:
+  pull_request:
+    branches: [main]
+
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - 'Dockerfile'
+      - 'requirements*.txt'
+      - '.github/workflows/pipeline.yml'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit tests, YAML checks and Docker build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install application and validation dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Validate Kubernetes and Argo CD YAML
+        run: python scripts/validate_manifests.py
+
+      - name: Build container locally for verification
+        run: docker build --tag gitops-flask:ci .
+
+  publish:
+    name: Publish ECR image and open GitOps promotion PR
+    needs: [test]
+
+    if: ${{ github.event_name == 'push' && vars.AWS_REGION != '' && vars.AWS_ROLE_ARN != '' && vars.ECR_REPOSITORY != '' }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+
+    steps:
+      - name: Check out trusted main branch
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Install Python for image promotion
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Exchange GitHub OIDC token for temporary AWS access
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push SHA-tagged image
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPO: ${{ vars.ECR_REPOSITORY }}
+          GIT_SHA: ${{ github.sha }}
+
+        run: |
+          set -euo pipefail
+
+          docker build --tag "$REGISTRY/$REPO:$GIT_SHA" .
+
+          docker push "$REGISTRY/$REPO:$GIT_SHA"
+
+          python scripts/update_image.py \
+            --image "$REGISTRY/$REPO" \
+            --tag "$GIT_SHA"
+
+      - name: Open pull request to promote the new image
+        uses: peter-evans/create-pull-request@v8
+
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+          add-paths: k8s/overlays/dev/kustomization.yaml
+
+          commit-message: 'chore(gitops): promote image to ${{ github.sha }}'
+
+          branch: automation/promote-dev-image
+
+          delete-branch: true
+
+          title: 'GitOps: promote tested image ${{ github.sha }}'
+
+          body: |
+            This PR updates only the desired container image in Git.
+
+            - Source commit: `${{ github.sha }}`
+            - Image is built and published to Amazon ECR.
+            - Review and merge to let Argo CD observe the new Git state.
+            - **The workflow itself does not deploy with kubectl.**

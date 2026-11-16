@@ -1,0 +1,22 @@
+# OPTIONAL, DO NOT APPLY DURING FIRST UPLOAD.
+# Standard EKS + AWS Load Balancer Controller (installed with its IAM role)
+# must be available; both public subnets need correct discovery tags and IGW routes.
+# For EKS Auto Mode the loadBalancerClass is different. This project uses Standard EKS.
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitops-flask-public
+  namespace: gitops-demo
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+spec:
+  type: LoadBalancer
+  loadBalancerClass: service.k8s.aws/nlb
+  selector:
+    app: gitops-flask
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP

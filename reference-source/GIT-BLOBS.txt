@@ -1,0 +1,27 @@
+# Source repository commit: fd9714f7208c351340a471250dca940e90f2a38b
+# Git blob SHA-1 followed by relative source path
+d39343e5dcffe9986bd17adaf18ce748b156dc38  .dockerignore
+0bff697e3b8e2d7702a1d57a843b178790dac1b6  .env.example
+7af86c67003cc5a299b8f40db8b00444adc30f51  .github/workflows/pipeline.yml
+5d7180e11ff9f34ec6e3f18b9192a5112270c299  .gitignore
+e574ca5d16d22c0f07d5a06b1ecdf812000b13bf  Dockerfile
+1d609406f01b8d123c5974582e8b1ae80fd8aef2  app/__init__.py
+4a09569e00f2621617bf57a3ddced6670e0e821f  app/static/style.css
+b10884b9616d5a3067cfcc9e80768c6d22315c7d  app/templates/index.html
+96cdecdd8d65a02bebc925ffe4cdfaa20586f7b8  argocd/application-dev.yaml
+ceb7a04fc624e5d5694d6e5a69506fdad094cfe3  docs/00-FIRST-PUSH.md
+79db895050f55054638f96b963d2b6bc5d18e28e  docs/AWS-AND-ARGOCD-SETUP.md
+8e91d186dbe08a53852fb9f92a4c4ead806df0b0  docs/COST-AND-CLEANUP.md
+e06509fbec5f7601af6863432eea19524427effc  docs/FILE-GUIDE.md
+c05ffac64cc74a2c93970ae387e60d6725a6eb19  docs/TROUBLESHOOTING.md
+b58904d99fd95c85ee265f099d4ef9a0d1570a41  k8s/base/deployment.yaml
+a33121c38a7158f6600180e0536b64d7058a10b8  k8s/base/kustomization.yaml
+0a20a02714a1b491db3ab70e73989a9271ab5293  k8s/base/service.yaml
+701630554878e93ae665ab6f820d2a9bb9c4b451  k8s/optional/public-nlb-service.yaml
+2e0cf077464fe2097513b5e305ac31bb18b6d99b  k8s/overlays/dev/kustomization.yaml
+7a5d4ae542c8b4fd83c252475bc287dde5172e07  requirements-dev.txt
+2153f5fe4c09353e0888b33675fc036490105a22  requirements.txt
+d0d93bac782b40921839a2add4a3fb4d91397523  scripts/update_image.py
+8ed4b368e0d618907405436fce251a7a5b2ae6b5  scripts/validate_manifests.py
+194c0ce7755b1cdf88b918333a42636b754aeebc  tests/test_app.py
+e9c41c1a6be086e606669f9b9813a50075b17911  tests/test_image_update.py
